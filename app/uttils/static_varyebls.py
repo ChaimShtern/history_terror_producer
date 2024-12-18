@@ -6,7 +6,7 @@ relevant_fields = [
     'latitude', 'longitude', 'country_txt', 'region_txt', 'city',
 
     # מידע על קבוצות תוקפות
-    'gname', 'guncertain1', 'nperps',
+    'gname', 'guncertain1', 'nperps', 'gname2', 'gname3',
 
     # מאפייני התקיפה
     'attacktype1_txt', 'attacktype2_txt', 'attacktype3_txt',
@@ -19,7 +19,7 @@ relevant_fields = [
     'weaptype4_txt', 'weapsubtype4_txt',
 
     # נפגעים ונזק
-    'nkill', 'nwound', 'nkillus', 'nwoundus',
+    'nkill', 'nwound', 'nkillter',
     'property', 'propvalue', 'propextent_txt',
 
     # חטיפות וסחיטה
@@ -28,3 +28,7 @@ relevant_fields = [
     # הערות ונתוני מקור
     'summary', 'addnotes', 'scite1', 'scite2', 'scite3'
 ]
+optional = ["eventid", "iyear", "imonth", "iday", "country",
+            "city", "latitude", "longitude", "region_txt", "location",
+            "targtype1_txt", "target1", "natlty1_txt", "gname",
+            "attacktype1_txt", "nperps", "nwound", "nwoundte", "nkill", "nkillter"]

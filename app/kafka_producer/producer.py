@@ -27,7 +27,7 @@ def produce_statistics_messages():
     data = read_csv_file_to_json(global_terrorism_1000_rows_path)
     relevant_fields = split_to_relevant_fields(data, relevant)
     for batch in partition_all(200, relevant_fields):
-        print(json.dumps(batch))
+        print(batch[0])
         produce(
             topic=statistics_topic,
-            value=json.dumps(batch))
+            value=batch)

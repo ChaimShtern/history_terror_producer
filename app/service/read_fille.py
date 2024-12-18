@@ -3,8 +3,8 @@ import pandas as pd
 import json
 from toolz import partition_all
 
-
-global_terrorism_1000_rows_path = os.path.join(os.path.dirname(__file__),'..','data','global_terrorism_1000_rows.csv')
+global_terrorism_1000_rows_path = os.path.join(os.path.dirname(__file__), '..', 'data',
+                                               'global_terrorism_1000_rows.csv')
 
 
 def split_json_to_batch(json_file, produce_funk):
@@ -21,7 +21,8 @@ def read_csv_file_to_json(file_path):
 
 def split_to_relevant_fields(json_file, relevant_fields):
     data = pd.DataFrame(json_file)
-    filtered_data = data.filter(items=relevant_fields)
-
+    filtered_data = (data.filter(items=relevant_fields)
+                     .fillna({"nkillter": 0.0, "nkill": 0.0})
+                     .fillna('None')
+                     .replace('None', None))
     return filtered_data.to_dict(orient="records")
-
