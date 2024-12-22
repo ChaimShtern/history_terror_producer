@@ -28,7 +28,5 @@ relevant_fields = [
     # הערות ונתוני מקור
     'summary', 'addnotes', 'scite1', 'scite2', 'scite3'
 ]
-optional = ["eventid", "iyear", "imonth", "iday", "country",
-            "city", "latitude", "longitude", "region_txt", "location",
-            "targtype1_txt", "target1", "natlty1_txt", "gname",
-            "attacktype1_txt", "nperps", "nwound", "nwoundte", "nkill", "nkillter"]
+
+relevant_neo4j_fields = ["gname", 'country_txt','region_txt','attacktype1_txt','targtype1_txt']

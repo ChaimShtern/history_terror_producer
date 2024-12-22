@@ -22,7 +22,15 @@ def read_csv_file_to_json(file_path):
 def split_to_relevant_fields(json_file, relevant_fields):
     data = pd.DataFrame(json_file)
     filtered_data = (data.filter(items=relevant_fields)
-                     .fillna({"nkillter": 0.0, "nkill": 0.0})
+                     .fillna({"nkillter": 0.0, "nkill": 0.0, "nwound": 0.0})
+                     .fillna('None')
+                     .replace('None', None))
+    return filtered_data.to_dict(orient="records")
+
+
+def split_to_relevant_neo4j_fields(json_file, relevant_fields):
+    data = pd.DataFrame(json_file)
+    filtered_data = (data.filter(items=relevant_fields)
                      .fillna('None')
                      .replace('None', None))
     return filtered_data.to_dict(orient="records")
