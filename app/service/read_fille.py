@@ -1,10 +1,13 @@
 import os
+from datetime import datetime
+
 import pandas as pd
 import json
 from toolz import partition_all
-
 global_terrorism_1000_rows_path = os.path.join(os.path.dirname(__file__), '..', 'data',
                                                'global_terrorism_1000_rows.csv')
+Worldwide_Terrorism_5000_rows = os.path.join(os.path.dirname(__file__), '..', 'data',
+                                             'Worldwide_Terrorism_5000_rows.csv')
 
 
 def split_json_to_batch(json_file, produce_funk):
@@ -26,6 +29,9 @@ def split_to_relevant_fields(json_file, relevant_fields):
                      .fillna('None')
                      .replace('None', None))
     return filtered_data.to_dict(orient="records")
+
+
+
 
 
 def split_to_relevant_neo4j_fields(json_file, relevant_fields):
