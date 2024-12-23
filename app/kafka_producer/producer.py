@@ -110,6 +110,7 @@ def produce_elastic_statistics_messages():
     sanitized_fields = sanitize_data(res)
 
     for batch in partition_all(200, sanitized_fields):
+        print(batch[0])
         produce(
             topic=elastic_topik,
             value=batch
