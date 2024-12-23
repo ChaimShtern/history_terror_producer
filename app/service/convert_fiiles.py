@@ -11,6 +11,8 @@ def get_country_region(country_name):
     # האזור הגיאוגרפי של המדינה (חלק מ-ISO)
     subdivisions = pycountry.subdivisions.get(country_code=country.alpha_2)
     return subdivisions
+
+
 def convert_dict_for_sql(data):
     # Parse the date
     try:
@@ -66,9 +68,9 @@ def convert_dict_for_sql(data):
 
 
 def convert_dict_for_neo4j(data):
-
+    region = get_country_region(data['Country'])
     return {'gname': data['Perpetrator'],
             'country_txt': data['Country'],
-            'region_txt':get_country_region(data['Country']) ,
-            'attacktype1_txt': None,
-            'targtype1_txt': None}
+            'region_txt': region if region else "None",
+            'attacktype1_txt': "None",
+            'targtype1_txt': "None"}
