@@ -30,3 +30,5 @@ relevant_fields = [
 ]
 
 relevant_neo4j_fields = ["gname", 'country_txt','region_txt','attacktype1_txt','targtype1_txt']
+
+relevant_elastic = ['country_txt', 'region_txt', 'city','iyear', 'imonth', 'iday','summary']

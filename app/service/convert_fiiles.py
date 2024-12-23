@@ -74,3 +74,39 @@ def convert_dict_for_neo4j(data):
             'region_txt': region if region else "None",
             'attacktype1_txt': "None",
             'targtype1_txt': "None"}
+
+
+def convert_dicts_for_elastic(data):
+    res = []
+    for dicty in data:
+        good_dict = {'city': dicty['city'],
+                     'country': dicty['country_txt'],
+                     'region': dicty['region_txt'],
+                     'date': f'{dicty['iyear']}-{dicty['imonth']}-{dicty['iday']}',
+                     'title': dicty['summary'],
+                     'new': False}
+        res.append(good_dict)
+
+    return res
+
+
+def convert_for_elastic_csv1_to_csv2(csv1):
+    res = []
+    for dicty in csv1:
+
+        region = get_country_region(dicty['Country'])
+        try:
+            date = datetime.strptime(dicty['Date'], '%d-%b-%y')
+        except ValueError:
+            date = None
+
+        res.append({
+            'iyear': date.year - 1000 if date else None,
+            'imonth': date.month if date else None,
+            'iday': date.day if date else None,
+            'country_txt': dicty.get('Country'),
+            'region_txt': region if region else None,
+            'city': dicty.get('City'),
+            'summary': dicty.get('Description'),
+        })
+    return res

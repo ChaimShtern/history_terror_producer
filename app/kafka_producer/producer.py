@@ -4,8 +4,9 @@ from dotenv import load_dotenv
 import os
 import pycountry
 
-from app.service.convert_fiiles import convert_dict_for_sql, convert_dict_for_neo4j
-from app.uttils.static_varyebls import relevant_fields as relevant
+from app.service.convert_fiiles import convert_dict_for_sql, convert_dict_for_neo4j, convert_dicts_for_elastic, \
+    convert_for_elastic_csv1_to_csv2
+from app.uttils.static_varyebls import relevant_fields as relevant, relevant_elastic
 from app.uttils.static_varyebls import relevant_neo4j_fields as relevant_neo4j
 from app.service.read_fille import (
     read_csv_file_to_json,
@@ -20,6 +21,7 @@ load_dotenv(verbose=True)
 
 statistics_topic = os.environ['STATISTICS_TOPIC']
 neo4j_topic = os.environ['NEO4J_TOPIC']
+elastic_topik = os.environ['ELASTIC_TOPIC']
 
 
 class CustomJSONEncoder(json.JSONEncoder):
@@ -88,5 +90,27 @@ def produce_neo4j_statistics_messages():
     for batch in partition_all(200, sanitized_fields):
         produce(
             topic=neo4j_topic,
+            value=batch
+        )
+
+
+def produce_elastic_statistics_messages():
+    csv1 = read_csv_file_to_json(global_terrorism_1000_rows_path)
+    csv2 = read_csv_file_to_json(Worldwide_Terrorism_5000_rows)
+
+    relevant_elastic_fields = split_to_relevant_fields(csv1, relevant_elastic)
+
+    converted_data = convert_for_elastic_csv1_to_csv2(csv2)
+    total_list = relevant_elastic_fields + converted_data
+
+    res = convert_dicts_for_elastic(total_list)
+
+
+    # Sanitize data before sending
+    sanitized_fields = sanitize_data(res)
+
+    for batch in partition_all(200, sanitized_fields):
+        produce(
+            topic=elastic_topik,
             value=batch
         )
